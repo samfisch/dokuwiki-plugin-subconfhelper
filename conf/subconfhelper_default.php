@@ -1,4 +1,4 @@
-<?
+<?php
 $conf = array(
     'ns'		   => '',
     'default_groups'	   => array( 'user' ),

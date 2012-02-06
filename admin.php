@@ -134,7 +134,8 @@ class admin_plugin_subconfhelper extends DokuWiki_Admin_Plugin {
 
         $meta = $this->meta;
         $default = $this->default;
-        $_config = &plugin_load( 'helper', 'subconfhelper_config'); #$_config->configuration( $meta, array( $file ), array( $default )); // TODO defaults
+        $_config = &plugin_load( 'helper', 'subconfhelper_config');
+        #$_config->configuration( $meta, array( $file ), array( $default )); // TODO defaults
         $_config->configuration( $meta, array( $file ));
 
         if ($_config->locked)
