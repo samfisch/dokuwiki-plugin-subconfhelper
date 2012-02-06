@@ -33,11 +33,6 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
 
     }
 
-    function isSingleton( ) {
-	return false;
-    }
-
-
     function configuration( $datafile, $local=array( ), $default=array( ), $protected=array( ) ) {
         global $conf, $config_cascade;
 
@@ -98,5 +93,9 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
         $this->_loaded = true;
 
     }
+    function isSingleton() {
+        return false;
+    }
+
 
 }
