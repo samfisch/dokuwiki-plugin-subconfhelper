@@ -1,22 +1,22 @@
-.act-admin div#subfnordconf ul {
+.act-admin div#subconfhelper ul {
   list-style: none none none;
   list-style-type: none;
 }
-.act-admin div#subfnordconf .vhostitem {
+.act-admin div#subconfhelper .vhostitem {
   margin-top: 40px;
 }
-.act-admin div#subfnordconf .vhostitem label {
+.act-admin div#subconfhelper .vhostitem label {
   display: block;
   float: left;
   width: 190px;
 }
-.act-admin div#subfnordconf .vhostitem .other {
+.act-admin div#subconfhelper .vhostitem .other {
 }
-.act-admin div#subfnordconf .vhostitem .selection {
+.act-admin div#subconfhelper .vhostitem .selection {
   width: 170px;
   float: left;
   margin-left: 20px;
 }
-.act-admin div#subfnordconf .vhostitem .selection label {
+.act-admin div#subconfhelper .vhostitem .selection label {
    width: 130px;
 }

@@ -1,6 +1,6 @@
 <?php
 
-$lang['menu'] = 'Manage Vhosts (SubFnordConf)';
+$lang['menu'] = 'Manage Vhosts (SubConfHelper)';
 
 $lang['vhost']      = 'Vhost: ';
 $lang['vhost_text']      = 'Edit Settings per subdomain prefix';
