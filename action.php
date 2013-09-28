@@ -218,64 +218,30 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
 
   function override_namespace(  $conf_override ) {/*{{{*/
     global $ID,$INFO,$conf;
-    $path = explode( ':', $ID );
+
     if( !$conf_override['ns'] ) { return ''; }
+
+    $path = explode( ':', $ID );
+    $oid = str_replace( '/', ':', $conf_override['ns'] );
     if( count( $path ) > 1 && $path[0] == $conf_override['ns'] ) { return ''; }
 
+    if( strpos( ':'.$ID, $oid ) === 0 ) { return ''; }
     $file = wikiFN($ID);
-    #if( file_exists( $file )) { return ''; }       // why was this here?
 
-    $ID	    = $conf_override['ns'].':'.$ID;;
-    $NS     = getNS($ID);
+    if( $conf_override['ns_inherit'] ) {
+      $newfile = wikiFN( $conf_override['ns'].':'.$ID );
+      if( !file_exists( $newfile ) && file_exists( $file )) { return ''; }
+    }
+
+    $ID	    = $conf_override['ns'].':'.$ID;
+    if( strpos( $ID, ':' ) === 0 ) {
+	$ID = substr( $ID, 1 ); }
+
+    $NS   = getNS($ID);
     $INFO = pageinfo();
-    $JSINFO['id']        = $ID;
+    $JSINFO['id']      = $ID;
     $INFO['namespace'] = (string) $INFO['namespace'];
     if ($conf['breadcrumbs']) breadcrumbs();
-
-  }/*}}}*/
-
-  function override_index(  $conf_override ) {/*{{{*/
-    global $ID,$INFO,$conf;
-    $path = explode( ':', $ID );
-    if( !$conf_override['ns'] ) { return ''; }
-    if( count( $path ) > 1 && $path[0] == $conf_override['ns'] ) { return ''; }
-
-    $file = wikiFN($ID);
-    #if( file_exists( $file )) { return ''; }       // why was this here?
-
-    $dir = $conf['datadir'];                                           
-    $ns  = cleanID($ns);                                               
-
-#    #fixme use appropriate function                                    
-#    if(empty($ns)){                                                    
-#        $ns = dirname(str_replace(':','/',$ID));                       
-#        if($ns == '.') $ns ='';                                        
-#    }                                                                  
-    $dir = $conf['datadir'];                                           
-    $ns  = cleanID($ns);                                               
-    $ns  = utf8_encodeFN(str_replace(':','/',$ns));                    
-                                                                       
-    echo p_locale_xhtml('index');                                      
-    echo '<div id="index__tree">';                                     
-                                                                       
-    $data = array();                                                   
-    search($data,$conf['datadir'],'search_index',array('ns' => $ns),'dw');
-echo "<pre>";                                                                                                                                    
-print_r( $data );                                                      
-echo "</pre>";                                                         
-    echo html_buildlist($data,'idx','html_list_index','html_li_index');
-                                                                       
-    echo '</div>';                                                     
-
-exit;
-
-#    $ID	    = $conf_override['ns'].':'.$ID;;
-#    $NS     = getNS($ID);
-#    $INFO = pageinfo();
-#    $JSINFO['id']        = $ID;
-#    $INFO['namespace'] = (string) $INFO['namespace'];
-#    if ($conf['breadcrumbs']) breadcrumbs();
-
   }/*}}}*/
 
 }

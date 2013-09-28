@@ -7,7 +7,11 @@ $config['varname'] = 'conf';     // name of the config variable, sans $
 // !! do not include any comment indicators !!
 // this value can be overriden when calling save_settings() method
 
+$meta['title']  = array('string');
+$meta['tagline']  = array('string');
+
 $meta['ns']  = array('string');
+$meta['ns_inherit']  = array('onoff');
 $meta['default_startpage']	    = array('string');
 $meta['default_groups']		    = array('string');
 $meta['template']		    = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');

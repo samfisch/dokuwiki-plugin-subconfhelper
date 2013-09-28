@@ -73,7 +73,7 @@ class admin_plugin_subconfhelper extends DokuWiki_Admin_Plugin {
 		if( $_changed  && !$_error && $_config->save_settings( $vhost )) {
 		    msg($this->getLang('msg_vhost_save'), 1);
 		} else {
-		    msg($this->getLang('msg_vhost_save_error'), -1);
+		    msg($this->getLang('msg_vhost_error'), -1);
 		}
               break;
 
