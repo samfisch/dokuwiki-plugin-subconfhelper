@@ -24,6 +24,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
         'url'    => 'https://www.dokuwiki.org/plugin:subconfhelper' );
   }
   function register( &$controller) {
+    $controller->register_hook('FEED_OPTS_POSTPROCESS', 'BEFORE',  $this, 'check_vhost' );
     $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE',  $this, 'check_vhost' );
     $controller->register_hook('TPL_ACT_RENDER', 'BEFORE',  $this, 'check_act' );
   }
@@ -84,7 +85,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
   }
   function override_conf( $conf_override ) {
       global $conf;
-      foreach( array( 'disableactions' ) as $key ) {
+      foreach( array( 'disableactions', 'title', 'tagline' ) as $key ) {
           if( isset( $conf_override[$key] )) {
       	    $conf[$key] = $conf_override[$key]; }}
   }
