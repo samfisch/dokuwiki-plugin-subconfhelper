@@ -38,7 +38,12 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
     $this->config_path = DOKU_CONF;
     $this->config_prefix = 'subconfhelper_';
     while( $domain && !$subdomain ) {
+
         $conf_file = $this->config_path.$this->config_prefix.$domain.'.php';
+        $conf_file_ssl = $this->config_path.$this->config_prefix.$domain.'_ssl.php';
+
+        if( $_SERVER['HTTPS'] == 'on' && file_exists( $conf_file_ssl )) {
+          $conf_file = $conf_file_ssl; }
         if( !file_exists( $conf_file )) {
             if( strpos( $domain, '.' )) {
                 $domain = substr( $domain, 0, strrpos( $domain, '.' )); }
