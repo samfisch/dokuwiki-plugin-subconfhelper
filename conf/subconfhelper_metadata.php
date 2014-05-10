@@ -13,7 +13,6 @@ $meta['tagline']  = array('string');
 $meta['ns']  = array('string');
 $meta['ns_inherit']  = array('onoff');
 $meta['default_startpage']	    = array('string');
-$meta['default_groups']		    = array('string');
 $meta['template']		    = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
 $meta['disableactions']		    = array('disableactions',
                                 '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
