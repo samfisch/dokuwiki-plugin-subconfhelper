@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Dokuwiki Action Plugin Subconfhelper
  *
  * @license   GPLv3(http://www.gnu.org/licenses/gpl.html)
@@ -30,7 +30,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
   }
   function read_config( $domain ) {
     if( !$domain ) { return false; }
-    if( isset( $this->sconf[$domain] )) { 
+    if( isset( $this->sconf[$domain] )) {
       return $this->sconf[$domain]; }
     else {
       $this->sconf[$domain] = array( );
@@ -41,7 +41,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
         $conf_file = $this->config_path.$this->config_prefix.$domain.'.php';
         if( !file_exists( $conf_file )) {
             if( strpos( $domain, '.' )) {
-                $domain = substr( $domain, 0, strrpos( $domain, '.' )); } 
+                $domain = substr( $domain, 0, strrpos( $domain, '.' )); }
             else {
                 $subdomain = $domain; }}
         else {
@@ -57,13 +57,13 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
     if( is_array( $sconf )) {
         if( $ACT == 'register' && $_POST['save'] ) {
             if( $this->override_register( $sconf )) {
-                $ACT = 'login'; } 
+                $ACT = 'login'; }
             else {
       	      $_POST['save'] = false; }}
         $this->override_defaultpage( $sconf );
-        $this->override_template( $sconf ); 
+        $this->override_template( $sconf );
         $this->override_namespace( $sconf );
-        $this->override_conf( $sconf ); 
+        $this->override_conf( $sconf );
     }
   }
   function check_act( &$event, $param ) {
@@ -71,15 +71,15 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
     $domain = $_SERVER['HTTP_HOST'];
     $sconf = $this->read_config( $domain );
     if( $ACT == 'index' && $sconf['ns'] ) {
-      $dir = $conf['datadir'];                                           
-      $ns  = cleanID($ns);                                               
-      $ns  = utf8_encodeFN( str_replace( ':', '/', $ns));                    
-      echo p_locale_xhtml('index');                                      
-      echo '<div id="index__tree">';                                     
-      $data = array();                                                   
+      $dir = $conf['datadir'];
+      $ns  = cleanID($ns);
+      $ns  = utf8_encodeFN( str_replace( ':', '/', $ns));
+      echo p_locale_xhtml('index');
+      echo '<div id="index__tree">';
+      $data = array();
       search($data,$conf['datadir'],'search_index',array( 'ns' => $ns ), $sconf['ns'] );
       echo html_buildlist( $data,'idx','html_list_index','html_li_index' );
-      echo '</div>';                                                     
+      echo '</div>';
       $event->preventDefault();
     }
   }
@@ -175,11 +175,11 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
     if( !$conf_override['ns'] ) { return ''; }
     $path = explode( ':', $ID );
     if( strpos( $ID, $conf_override['ns'] ) === 0 ) { return ''; }
-    if( strpos( ':'.$ID, str_replace( '/', ':', 
+    if( strpos( ':'.$ID, str_replace( '/', ':',
                     $conf_override['ns'] )) === 0 ) { return ''; }
     if( $conf_override['ns_inherit'] ) {
       $newfile = wikiFN( $conf_override['ns'].':'.$ID );
-      if( !file_exists( wikiFN( $conf_override['ns'].':'.$ID )) 
+      if( !file_exists( wikiFN( $conf_override['ns'].':'.$ID ))
                      && file_exists( wikiFN($ID))) { return ''; }}
     $ID = $conf_override['ns'].':'.$ID;
     if( strpos( $ID, ':' ) === 0 ) {
