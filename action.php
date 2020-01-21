@@ -23,7 +23,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
         'desc'   => 'override various configuration settings per subdomain',
         'url'    => 'https://www.dokuwiki.org/plugin:subconfhelper' );
   }
-  function register( &$controller) {
+  function register( Doku_Event_Handler $controller) {
     $controller->register_hook('FEED_OPTS_POSTPROCESS', 'BEFORE',  $this, 'check_vhost' );
     $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE',  $this, 'check_vhost' );
     $controller->register_hook('TPL_ACT_RENDER', 'BEFORE',  $this, 'check_act' );
@@ -90,6 +90,7 @@ class action_plugin_subconfhelper extends DokuWiki_Action_Plugin {
       	    $conf[$key] = $conf_override[$key]; }}
   }
   function override_template( $conf_override ) {
+    if( $conf_override['template'] == 'tpl' ) return true;
     $t = plugin_load( 'action', 'templateconfhelper_templateaction' );
     if( $t ) {
       $t->tpl_switch( $conf_override['template'] ); }

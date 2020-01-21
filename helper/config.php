@@ -8,10 +8,14 @@ define('CONF_SELF', DOKU_PLUGIN.'config/');
 define('PLUGIN_METADATA',CONF_SELF.'settings/config.metadata.php');
 if(!defined('DOKU_PLUGIN_IMAGES')) define('DOKU_PLUGIN_IMAGES',DOKU_BASE.'lib/plugins/config/images/');
   
-require_once(CONF_SELF.'settings/config.class.php');  // main configuration class and generic settings classes
-require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specific to these settings
+require_once('settings/config.class.php');  // main configuration class and generic settings classes
+require_once('settings/extra.class.php');   // settings classes specific to these settings
+require_once('settings/sub_setting.class.php');   // settings classes specific to these settings
+
 
   class helper_plugin_subconfhelper_config extends configuration {
+
+    const KEYMARKER = '____';
 
     var $_name = 'conf';           // name of the config variable found in the files (overridden by $config['varname'])
     var $_format = 'php';          // format of the config file, supported formats - php (overridden by $config['format'])
@@ -29,7 +33,7 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
     /**
      *  constructor
      */
-    function helper_plugin_subconfhelper_config( ) {
+    function __construct( ) {
 
     }
 
@@ -57,7 +61,7 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
         $this->_metadata = $meta;
 
       // retrieve 
-        $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
+        $no_default_check = array('SubSettingFieldset', 'SubSettingUndefined', 'SubSettingNoClass');
 
         #$default = array_merge($this->get_plugintpl_default($conf['template']), $this->_read_config_group($this->_default_files));
         $default = array_merge($this->_read_config_group($this->_default_files));
@@ -70,15 +74,15 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
         foreach ($keys as $key) {
           if (isset($this->_metadata[$key])) {
             $class = $this->_metadata[$key][0];
-            $class = ($class && class_exists('setting_'.$class)) ? 'setting_'.$class : 'setting';
-            if ($class=='setting') {
-              $this->setting[] = new setting_no_class($key,$param);
+            $class = ($class && class_exists('SubSetting'.ucfirst( $class ))) ? 'SubSetting'.ucfirst( $class ) : 'SubSetting';
+            if ($class=='SubSetting') {
+              $this->setting[] = new SubSettingNoClass($key,$param);
             } 
               
             $param = $this->_metadata[$key];
             array_shift($param);
           } else {
-            $class = 'setting_undefined';
+            $class = 'SubSettingUndefined';
             $param = NULL;
           }   
               
@@ -86,6 +90,7 @@ require_once(CONF_SELF.'settings/extra.class.php');   // settings classes specif
           #  $this->setting[] = new setting_no_default($key,$param);
           #}   
               
+error_log( 'class: '.$class );
           $this->setting[$key] = new $class($key,$param);
           $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);
         }     

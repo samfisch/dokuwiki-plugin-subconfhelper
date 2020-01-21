@@ -68,7 +68,7 @@ class admin_plugin_subconfhelper extends DokuWiki_Admin_Plugin {
 		  if ($_config->setting[$key]->update($input)) {
 		    $_changed = true;
 		  } 
-		  if ($_config->setting[$key]->error()) $_error = true;
+		  if ($_config->setting[$key]->hasError()) $_error = true;
 		}   
 		if( $_changed  && !$_error && $_config->save_settings( $vhost )) {
 		    msg($this->getLang('msg_vhost_save'), 1);
@@ -153,8 +153,8 @@ class admin_plugin_subconfhelper extends DokuWiki_Admin_Plugin {
 
           list($label,$input) = $setting->html($this, $this->_error);
                                                        
-          $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
-          $error = $setting->error() ? ' class="value error"' : ' class="value"';
+          $class = $setting->isDefault() ? ' class="default"' : ($setting->isProtected() ? ' class="protected"' : '');
+          $error = $setting->hasError() ? ' class="value error"' : ' class="value"';
           $icon = $setting->caution() ? '<img src="'.DOKU_PLUGIN_IMAGES.$setting->caution().'.png" '
                                 .'alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />' : '';
                                                        
